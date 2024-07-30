@@ -61,10 +61,13 @@ type CreateTodo struct {
 	// 待办通知配置
 	NotifyConfigs *notifyConfigs `json:"notifyConfigs,omitempty"`
 
+	// 自定义字段List
 	ContentFieldList []*contentFieldListItem `json:"contentFieldList,omitempty"`
 }
 
 type contentFieldListItem struct {
+	FieldKey   string `json:"fieldKey,omitempty"`
+	FieldValue string `json:"fieldValue,omitempty"`
 }
 
 type detailUrl struct {
@@ -91,6 +94,18 @@ func (todo *CreateTodo) String() string {
 
 func NewCreateTodo(unionId, subject string) *createTodoBuilder {
 	return &createTodoBuilder{todo: &CreateTodo{Subject: subject, CreatorId: unionId}}
+}
+
+func (c *createTodoBuilder) CreateContentFieldItem(fieldKey, fieldValue string) *contentFieldListItem {
+	return &contentFieldListItem{
+		FieldKey:   fieldKey,
+		FieldValue: fieldValue,
+	}
+}
+
+func (c *createTodoBuilder) SetContentFieldList(contentFieldListItem *contentFieldListItem) *createTodoBuilder {
+	c.todo.ContentFieldList = append(c.todo.ContentFieldList, contentFieldListItem)
+	return c
 }
 
 func (c *createTodoBuilder) SetSourceId(sourceId string) *createTodoBuilder {
