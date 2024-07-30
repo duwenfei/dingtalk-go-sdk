@@ -60,6 +60,11 @@ type CreateTodo struct {
 
 	// 待办通知配置
 	NotifyConfigs *notifyConfigs `json:"notifyConfigs,omitempty"`
+
+	ContentFieldList []*contentFieldListItem `json:"contentFieldList,omitempty"`
+}
+
+type contentFieldListItem struct {
 }
 
 type detailUrl struct {
